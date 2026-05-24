@@ -55,17 +55,19 @@ with tab1:
             "Wellness Service", 
             "Corporate Investment", 
             "Stock Market"
-        ]
+        ],
+        index=None, # This forces the box to be empty by default
+        placeholder="Choose a Data Mart..." # The text shown before they click
     )
 
     # 2. Map the selection to the correct image file
     image_mapping = {
-        "Room Rental Cube": "erd_room_rental.png",
-        "Financial Payment Cube": "erd_payment.png",
-        "Pool Rental Cube": "erd_pool_rental.png",
-        "Wellness Service Cube": "erd_service_rental.png",
-        "Corporate Investment Cube": "erd_investment.png",
-        "Stock Market Cube": "erd_stock_price_history.png"
+        "Room Rental": "erd_room_rental.png",
+        "Financial Payment": "erd_payment.png",
+        "Pool Rental": "erd_pool_rental.png",
+        "Wellness Service": "erd_service_rental.png",
+        "Corporate Investment": "erd_investment.png",
+        "Stock Market": "erd_stock_price_history.png"
     }
     
     selected_image = image_mapping[cube_selection]
