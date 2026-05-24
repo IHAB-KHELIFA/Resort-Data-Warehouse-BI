@@ -47,14 +47,14 @@ with tab1:
 
     # 1. The Interactive Selector
     cube_selection = st.selectbox(
-        "Select an OLAP Cube to inspect:",
+        "Select a Fact Star Schema to inspect:",
         [
-            "Room Rental Cube", 
-            "Financial Payment Cube", 
-            "Pool Rental Cube", 
-            "Wellness Service Cube", 
-            "Corporate Investment Cube", 
-            "Stock Market Cube"
+            "Room Rental", 
+            "Financial Payment", 
+            "Pool Rental", 
+            "Wellness Service", 
+            "Corporate Investment", 
+            "Stock Market"
         ]
     )
 
