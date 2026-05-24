@@ -16,7 +16,7 @@ def init_connection():
             port="5432",
             database="postgres", # Change if you named your DB differently
             user="postgres",     # Default username
-            password="YOUR_LOCAL_PASSWORD" # Replace with your actual password²
+            password="IHAB" # Replace with your actual password²
         )
     except Exception as e:
         st.error(f"Failed to connect to database: {e}")
@@ -40,25 +40,48 @@ with tab1:
     st.header("Data Warehouse Architecture")
     st.markdown("""
     This section outlines the backend structure of the Resort Data Warehouse. 
-    The database utilizes a hybrid **Star/Snowflake Schema** design to optimize for fast OLAP (Online Analytical Processing) queries.
+    Select a specific business process (Data Mart) below to view its dedicated **Star Schema** design.
     """)
     
     st.divider()
 
-    # 1. Display the Image
-    st.subheader("Entity-Relationship Diagram (ERD)")
+    # 1. The Interactive Selector
+    cube_selection = st.selectbox(
+        "Select an OLAP Cube to inspect:",
+        [
+            "Room Rental Cube", 
+            "Financial Payment Cube", 
+            "Pool Rental Cube", 
+            "Wellness Service Cube", 
+            "Corporate Investment Cube", 
+            "Stock Market Cube"
+        ]
+    )
+
+    # 2. Map the selection to the correct image file
+    image_mapping = {
+        "Room Rental Cube": "erd_room_rental.png",
+        "Financial Payment Cube": "erd_payment.png",
+        "Pool Rental Cube": "erd_pool_rental.png",
+        "Wellness Service Cube": "erd_service_rental.png",
+        "Corporate Investment Cube": "erd_investment.png",
+        "Stock Market Cube": "erd_stock_price_history.png"
+    }
+    
+    selected_image = image_mapping[cube_selection]
+
+    # 3. Display the Dynamic Image
+    st.subheader(f"Entity-Relationship Diagram: {cube_selection}")
     try:
-        # Streamlit looks for this image file in your folder
-        st.image("Schema.png", caption="Resort Data Warehouse Schema", use_container_width=True)
+        st.image(selected_image, caption=f"Star Schema for {cube_selection}", use_container_width=True)
     except FileNotFoundError:
-        st.warning("🖼️ Image not found. Please save your DBeaver diagram as 'erd_schema.png' in the same folder as this app.")
+        st.warning(f"🖼️ Image not found. Please save your DBeaver diagram as '{selected_image}' in the same folder.")
 
     st.divider()
 
-    # 2. Display the Technical Summary
+    # 4. Display the Technical Summary
     st.subheader("Schema Details")
     
-    # Using columns to make a neat layout
     col1, col2 = st.columns(2)
     
     with col1:
