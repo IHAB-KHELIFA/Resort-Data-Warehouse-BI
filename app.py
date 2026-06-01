@@ -58,6 +58,7 @@ with tab1:
         ],
         index=None, # This forces the box to be empty by default
         placeholder="Choose a Data Mart..." # The text shown before they click
+        
     )
 
     # 2. Map the selection to the correct image file
@@ -70,15 +71,23 @@ with tab1:
         "Stock Market": "erd_stock_price_history.png"
     }
     
-    selected_image = image_mapping[cube_selection]
-
-    # 3. Display the Dynamic Image
-    st.subheader(f"Entity-Relationship Diagram: {cube_selection}")
-    try:
-        st.image(selected_image, caption=f"Star Schema for {cube_selection}", use_container_width=True)
-    except FileNotFoundError:
-        st.warning(f"🖼️ Image not found. Please save your DBeaver diagram as '{selected_image}' in the same folder.")
-
+    # 3. Only display the image IF they made a selection
+    if cube_selection:
+        selected_image = image_mapping[cube_selection]
+        st.subheader(f"Entity-Relationship Diagram: {cube_selection}")
+        try:
+            # Create 3 columns: invisible left padding, the image center, invisible right padding
+            # The [1, 2, 1] means the center column is twice as big as the sides
+            spacer_left, img_col, spacer_right = st.columns([1, 2, 1])
+            
+            with img_col:
+                st.image(selected_image, caption=f"Star Schema for {cube_selection}", use_container_width=True)
+                
+        except FileNotFoundError:
+            st.warning(f"🖼️ Image not found. Please save your DBeaver diagram as '{selected_image}' in the same folder.")
+    else:
+        st.info("Please select a Data Mart from the dropdown above to view its Star Schema diagram.")        
+          
     st.divider()
 
     # 4. Display the Technical Summary
